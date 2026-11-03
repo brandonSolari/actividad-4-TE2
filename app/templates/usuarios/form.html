@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Editar usuario' if usuario else 'Nuevo usuario' }}{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h2 class="h4 mb-3">{{ 'Editar usuario' if usuario else 'Nuevo usuario' }}</h2>
+        <form method="post">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100"
+                   value="{{ request.form.get('nombre', usuario.nombre if usuario else '') }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="email" name="email" maxlength="120"
+                   value="{{ request.form.get('email', usuario.email if usuario else '') }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   {% if not usuario %}required{% endif %}>
+            {% if usuario %}<div class="form-text">Déjala vacía para conservar la actual.</div>{% endif %}
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a class="btn btn-outline-secondary" href="{{ url_for('usuarios.lista') }}">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
